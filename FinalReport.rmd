@@ -1,7 +1,7 @@
 ---
 title: "Aides Drug"
-author: "Put your name here!"
-date: "put the date here"
+author: "Sandra 'Sarah' Rogers"
+date: "11/18/2019"
 output: html_document
 ---
 
