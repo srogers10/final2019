@@ -16,10 +16,87 @@ avast <-read.csv(file="avastivironal.csv",header=TRUE)
 <!--In this section you explain what you are trying to show.  Where did the data come from?  What is the research or other question you are trying to answer?.  If you skimp in this section expect to be marked down in your grade. Paint a picture of the project a couple of paragraphs is expected!-->
 
 A new  preventative aides (abacavirinol) is under test in clinical trials. Analyze the effectiveness of this drug across the board. Consider population subgroups by gender, drug use, and sexual orientation. Finish this!
+Describe what we are analyzing and ...
 
 # Methods
 
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method. Discuss what data manipulations may be needed for example subsetting or other binning procedures and what sort of graphical displays and inferential tools will be used!-->
+
+For each of the five tests, response is categorical, the factor variable is categorical so we...
+
+
+
+## Question 1: Is the vaccine effective for the total population?
+$H_0$ The Vaccine has no effect on whether one contracts aids or not.  
+$H_1$ The Vaccine effects whether one contracts aids or not.
+
+```{r}
+barchartGC(~infected + treatment, data= avast)
+```
+This barchart shows that almost twice as many people who were on the placebo contracted aids campared to those that took the drug.
+
+```{r}
+allPeople = xtabs( ~infected + treatment, data= avast )
+rowPerc(allPeople)
+```
+This table shows that about one and a half
+
+```{r}
+chisqtestGC(allPeople, data=avast)
+```
+
+```{r}
+barchartGC(~infected + treatment, data = filter(avast, sex == 'gal'), main = 'Women Only', type = 'percent')
+```
+
+```{r}
+gal = xtabs( ~infected + treatment, data= avast, sex == 'gal')
+rowPerc(gal)
+```
+
+```{r}
+chisqtestGC(gal, data=avast, sex == 'gal')
+```
+
+```{r}
+barchartGC(~infected + treatment, data = filter(avast, sex == 'guy'), main = 'Men Only', type = 'percent')
+```
+
+```{r}
+guy = xtabs( ~infected + treatment, data= avast, sex == 'guy' )
+rowPerc(guy)
+```
+
+```{r}
+chisqtestGC(guy, data=avast, sex == 'guy')
+```
+
+```{r}
+barchartGC(~infected + treatment, data = filter(avast, DrugUser == 'yes'), main = 'Drug Users Only', type = 'percent')
+```
+
+```{r}
+yes = xtabs( ~infected + treatment, data= avast, DrugUser == 'yes' )
+rowPerc(yes)
+```
+
+```{r}
+chisqtestGC(yes, data=avast, DrugUser == 'yes')
+```
+
+```{r}
+barchartGC(~infected + treatment, data = filter(avast, LGBTQ == 'gay'), main = 'LGBTQ Only', type = 'percent')
+```
+
+```{r}
+gay = xtabs( ~infected + treatment, data= avast, LGBTQ == 'gay' )
+rowPerc(gay)
+```
+
+```{r}
+chisqtestGC(gay, data=avast, LGBTQ == 'gay')
+```
+
 
 #Results
 
