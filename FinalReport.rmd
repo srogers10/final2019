@@ -22,80 +22,12 @@ Describe what we are analyzing and ...
 
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method. Discuss what data manipulations may be needed for example subsetting or other binning procedures and what sort of graphical displays and inferential tools will be used!-->
 
-For each of the five tests, response is categorical, the factor variable is categorical so we...
 
-
+Both variables in this analysis are categorical; hence we use bar graphs and tables to summarize the data, and a chi-squared test for inference.
 
 ## Question 1: Is the vaccine effective for the total population?
 $H_0$ The Vaccine has no effect on whether one contracts aids or not.  
 $H_1$ The Vaccine effects whether one contracts aids or not.
-
-```{r}
-barchartGC(~infected + treatment, data= avast)
-```
-This barchart shows that almost twice as many people who were on the placebo contracted aids campared to those that took the drug.
-
-```{r}
-allPeople = xtabs( ~infected + treatment, data= avast )
-rowPerc(allPeople)
-```
-This table shows that about one and a half
-
-```{r}
-chisqtestGC(allPeople, data=avast)
-```
-
-```{r}
-barchartGC(~infected + treatment, data = filter(avast, sex == 'gal'), main = 'Women Only', type = 'percent')
-```
-
-```{r}
-gal = xtabs( ~infected + treatment, data= avast, sex == 'gal')
-rowPerc(gal)
-```
-
-```{r}
-chisqtestGC(gal, data=avast, sex == 'gal')
-```
-
-```{r}
-barchartGC(~infected + treatment, data = filter(avast, sex == 'guy'), main = 'Men Only', type = 'percent')
-```
-
-```{r}
-guy = xtabs( ~infected + treatment, data= avast, sex == 'guy' )
-rowPerc(guy)
-```
-
-```{r}
-chisqtestGC(guy, data=avast, sex == 'guy')
-```
-
-```{r}
-barchartGC(~infected + treatment, data = filter(avast, DrugUser == 'yes'), main = 'Drug Users Only', type = 'percent')
-```
-
-```{r}
-yes = xtabs( ~infected + treatment, data= avast, DrugUser == 'yes' )
-rowPerc(yes)
-```
-
-```{r}
-chisqtestGC(yes, data=avast, DrugUser == 'yes')
-```
-
-```{r}
-barchartGC(~infected + treatment, data = filter(avast, LGBTQ == 'gay'), main = 'LGBTQ Only', type = 'percent')
-```
-
-```{r}
-gay = xtabs( ~infected + treatment, data= avast, LGBTQ == 'gay' )
-rowPerc(gay)
-```
-
-```{r}
-chisqtestGC(gay, data=avast, LGBTQ == 'gay')
-```
 
 
 #Results
@@ -108,15 +40,214 @@ chisqtestGC(gay, data=avast, LGBTQ == 'gay')
 
 <!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question. Bottom line is to explain the features of the graph that are relevant to conforming or departing to what is expected by your null hypothesis !-->
 
+```{r}
+barchartGC(~infected + treatment, data= avast, main = 'All People', type = 'percent')
+```
+
+This barchart shows that about a quarter more people who were on the placebo contracted aids campared to those that took the vaccine.
+
 ### Numerical Descriptive Results
 
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+```{r}
+allPeople = xtabs( ~infected + treatment, data= avast )
+rowPerc(allPeople)
+```
+
+This table shows that about one and a half more of the people who took the placebo contracted aids compared to those that took the vaccine. Of the people who did not contract aids, the effect of the vaccine and placebo was about the same.
+
 
 ## Inferential Results
 
 <!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
 
+```{r}
+chisqtestGC(allPeople, data=avast)
+```
+
+The P-value for the chi-square test is 0 < 0.05 so we reject the null hypothesis and conclude we have evidence to support the contention that the vaccine does have an effect in helping prevent one from contracting aids.
+
+
+
+
+# Discussion and Conclusion
+
+<!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!--> 
+
+After reviewing the bargraph and chi-square test we can say there is a relationship between the vaccine and whether or not it effects one from contracting aids or not.
+
+
+
+
+
+
+
+### Graphical Descriptive Results
+
+<!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question. Bottom line is to explain the features of the graph that are relevant to conforming or departing to what is expected by your null hypothesis !-->
+
+
+```{r}
+barchartGC(~infected + treatment, data = filter(avast, sex == 'gal'), main = 'Women Only', type = 'percent')
+```
+
+This barchart shows that a little more than half of the women who took the placebo contracted aids compared to those that took the vaccine and of those who did not contract aids, the effect of the vaccine and placebo was about the same.
+
+
+### Numerical Descriptive Results
+
+<!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+```{r}
+gal = xtabs( ~infected + treatment, data= avast, sex == 'gal')
+rowPerc(gal)
+```
+
+This table shows that more than half of the women who have aids did not take the vaccine and the effect of both the vaccine and the placebo was about the same for those who do not have aids.
+
+## Inferential Results
+
+<!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
+
+```{r}
+chisqtestGC(gal, data=avast, sex == 'gal')
+```
+
+The P-value for the chi-square test is 0 < 0.05 so we reject the null hypothesis and conclude we have evidence to support the contention that the vaccine does have an effect in helping prevent one from contracting aids.
+
 
 # Discussion and Conclusion
 
 <!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
+
+After reviewing the bargraph and chi-square test we can say there is a relationship between the vaccine and whether or not it effects one from contracting aids or not.
+
+
+
+
+
+
+### Graphical Descriptive Results
+
+<!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question. Bottom line is to explain the features of the graph that are relevant to conforming or departing to what is expected by your null hypothesis !-->
+
+```{r}
+barchartGC(~infected + treatment, data = filter(avast, sex == 'guy'), main = 'Men Only', type = 'percent')
+```
+
+This barchart shows that more men who took the vaccine contracted aids by about one-third compared to those who took the placebo and for the men who do not have aids, the effect of the placebo seemed to be slightly more effecient.
+
+### Numerical Descriptive Results
+
+<!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+```{r}
+guy = xtabs( ~infected + treatment, data= avast, sex == 'guy' )
+rowPerc(guy)
+```
+
+This table shows that almost 20% more men who were taking the vaccine contracted aids compared to those that were taking the placebo. The effect of both the vaccine and the placebo proved to tbe about the same with only about a 3% difference of the placebo being slightly more effective.
+
+## Inferential Results
+
+<!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
+
+```{r}
+chisqtestGC(guy, data=avast, sex == 'guy')
+```
+
+The P-value for the chi-square test is 1e-04 < 0.05 so we reject the null hypothesis and conclude we have evidence to support the contention that the vaccine does have an effect on making men more susceptible from contracting aids. 
+
+
+
+# Discussion and Conclusion
+
+<!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
+
+After reviewing the bargraph and chi-square test we can say there is a relationship between the vaccine and whether or not it effects one from contracting aids or not.
+
+
+
+### Graphical Descriptive Results
+
+<!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question. Bottom line is to explain the features of the graph that are relevant to conforming or departing to what is expected by your null hypothesis !-->
+
+
+```{r}
+barchartGC(~infected + treatment, data = filter(avast, DrugUser == 'yes'), main = 'Drug Users Only', type = 'percent')
+```
+
+This barchart shows that for drug users the effect of the vaccine proved to be more effective than the placebo because almost three times as many people who took the placebo contracted aids compared to those who took the drug. For the drug users that did not contract aids, the effect of the vaccine and placebo was about the same with the placebo being slightly more effective.
+
+### Numerical Descriptive Results
+
+<!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+```{r}
+yes = xtabs( ~infected + treatment, data= avast, DrugUser == 'yes' )
+rowPerc(yes)
+```
+
+This table shows that the effect of the vaccine for the drug users was significantly more effective than the placebo because about 50% more people who were taking the placebo contracted aids compared to those that were taking the vaccine. For the drug users who did not contract aids, the effect of the vaccine and placebo was about the same.
+
+## Inferential Results
+
+<!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
+
+```{r}
+chisqtestGC(yes, data=avast, DrugUser == 'yes')
+```
+
+The P-value for the chi-square test is 0 < 0.05 so we reject the null hypothesis and conclude we have evidence to support the contention that the vaccine does have an effect in helping prevent one from contracting aids.
+
+# Discussion and Conclusion
+
+<!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
+
+After reviewing the bargraph and chi-square test we can say there is a relationship between the vaccine and whether or not it effects one from contracting aids or not.
+
+
+### Graphical Descriptive Results
+
+<!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question. Bottom line is to explain the features of the graph that are relevant to conforming or departing to what is expected by your null hypothesis !-->
+
+
+```{r}
+barchartGC(~infected + treatment, data = filter(avast, LGBTQ == 'gay'), main = 'LGBTQ Only', type = 'percent')
+```
+
+This barchart shows that the number of LGBTQ people who have aids and were taking the vaccine was significantly higher by more than half the number of people who have aids and were taking the placebo. For the LGBTQ people who do not have aids, the effect of the placebo and the vaccine was about the same.
+
+
+
+### Numerical Descriptive Results
+
+<!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+```{r}
+gay = xtabs( ~infected + treatment, data= avast, LGBTQ == 'gay' )
+rowPerc(gay)
+```
+
+This table shows that for the LGBTQ people who have aids, the vaccine was signifcantly ineffective because almost half as many of them were taking the vaccine contracted aids in comparison to those that were taking the placebo. For the LGBTQ people who do not have aids, the effect of the vaccine and the placebo was almost exactly the same with only about a 1% difference.
+
+
+## Inferential Results
+
+<!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
+
+```{r}
+chisqtestGC(gay, data=avast, LGBTQ == 'gay')
+```
+
+The P-value for the chi-square test is 0 < 0.05 so we reject the null hypothesis and conclude we have evidence to support the contention that the vaccine does have an effect on making LGBTQ people more susceptible from contracting aids. 
+
+# Discussion and Conclusion
+
+<!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
+
+After reviewing the bargraph and chi-square test we can say there is a relationship between the vaccine and whether or not it effects one from contracting aids or not.
+
+
+
